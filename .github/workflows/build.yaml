@@ -62,12 +62,12 @@ jobs:
           ls -lah
           ls -lah ~/riscv/
           pwd
-          tar czvf toolchan-${{matrix.os}}-${{matrix.mode}}.tar.gz -C ~/riscv/
-          echo "TOOLCHAIN=toolchan-${{matrix.os}}-${{matrix.mode}}.tar.gz" >> $GITHUB_ENV
+          tar czvf toolchan-${{ matrix.target }-${{ matrix.mode }}-${{ matrix.os }}.tar.gz -C ~/riscv/
+          echo "TOOLCHAIN=toolchan-${{ matrix.target }-${{ matrix.mode }}-${{ matrix.os }}.tar.gz" >> $GITHUB_ENV
 
       - name: Upload Firmware
         uses: actions/upload-artifact@master
         with:
-          name: toolchan-${{ matrix.os }}-${{ matrix.mode }}
+          name: toolchan-${{ matrix.target }-${{ matrix.mode }}-${{ matrix.os }}
           path: |
             ${{env.TOOLCHAIN}}    
