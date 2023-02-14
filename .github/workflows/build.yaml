@@ -14,23 +14,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:     [ubuntu-20.04, ubuntu-22.04]
+        os:     [ubuntu-latest, macos-latest]
         mode:   [newlib, linux]
         target: [rv32gc-ilp32d, rv64gc-lp64d]
+        include: 
+          - os: ubuntu-latest
+            apt: 1
+          - os: macos-latest
+            brew: 1
     steps:
       - uses: actions/checkout@v2
-
-      - name: install dependencies
+      - name: install ubuntu dependencies
+        if: ${{ matrix.apt }}
         run: |
           sudo dpkg --add-architecture i386
           sudo apt update
           sudo apt install -y autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev \
             libgmp-dev gawk build-essential bison flex texinfo gperf libtool \
             patchutils bc zlib1g-dev libexpat-dev git
+
+      - name: install macos dependencies
+        if: ${{ matrix.brew }}
+        run: |
+          brew install python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat
+
       - name: get necessary submodules
         run: |
           git submodule init
           git submodule update --recursive --progress --recommend-shallow
+          
       - name: build toolchain
         run: |
           TARGET_TUPLE=($(echo ${{ matrix.target }} | tr "-" "\n"))
