@@ -54,20 +54,20 @@ jobs:
       - name: build toolchain
         run: |
           TARGET_TUPLE=($(echo ${{ matrix.target }} | tr "-" "\n"))
-          ./configure --prefix=/opt/riscv --with-arch=${TARGET_TUPLE[0]} --with-abi=${TARGET_TUPLE[1]}
-          sudo make ${{ matrix.mode }}
+          ./configure --prefix=~/riscv --with-arch=${TARGET_TUPLE[0]} --with-abi=${TARGET_TUPLE[1]}
+          sudo make -j $(nproc) ${{ matrix.mode }}
 
       - name: tarball build
-        run: tar czvf riscv.tar.gz -C /opt/ riscv/
-
-      - name: generate prebuilt toolchain name
-        id:   toolchain-name-generator
         run: |
-          if [[ "${{ matrix.target }}" == *"32"* ]]; then BITS=32; else BITS=64; fi
-          if [[ "${{ matrix.mode }}" == "linux" ]]; then MODE="glibc"; else MODE="elf"; fi
-          echo ::set-output name=TOOLCHAIN_NAME::riscv$BITS-$MODE-${{ matrix.os }}-nightly
+          ls -lah
+          ls -lah ~/riscv/
+          pwd
+          tar czvf toolchan-${{matrix.os}}-${{matrix.mode}}.tar.gz -C ~/riscv/
+          echo "TOOLCHAIN=toolchan-${{matrix.os}}-${{matrix.mode}}.tar.gz" >> $GITHUB_ENV
 
-      - uses: actions/upload-artifact@v2
+      - name: Upload Firmware
+        uses: actions/upload-artifact@master
         with:
-          name: ${{ steps.toolchain-name-generator.outputs.TOOLCHAIN_NAME }}
-          path: riscv.tar.gz
+          name: toolchan-${{ matrix.os }}-${{ matrix.mode }}
+          path: |
+            ${{env.TOOLCHAIN}}    
