@@ -20,7 +20,7 @@ jobs:
         include: 
           - os: ubuntu-latest
             apt: 1
-          - os: macos-latest
+          - os: macos-11
             brew: 1
     steps:
       - uses: actions/checkout@v2
