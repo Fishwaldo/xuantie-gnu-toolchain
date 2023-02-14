@@ -14,7 +14,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:     [ubuntu-latest, macos-11]
+        os:     [ubuntu-latest]
         mode:   [newlib, linux]
         target: [rv32gc-ilp32d, rv64gc-lp64d]
         include: 
