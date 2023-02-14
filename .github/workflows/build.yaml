@@ -44,6 +44,7 @@ jobs:
           git submodule update --init --recursive riscv-gcc
           git submodule update --init --recursive riscv-gdb
           git submodule update --init --recursive riscv-newlib
+          git submodule update --init --recursive riscv-glibc
 
       - name: patch macos
         if: ${{ matrix.brew }}
