@@ -22,9 +22,9 @@ jobs:
 
       - name: install dependencies
         run: |
-          dpkg --add-architecture i386
-          apt update
-          apt install -y autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev \
+          sudo dpkg --add-architecture i386
+          sudo apt update
+          sudo apt install -y autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev \
             libgmp-dev gawk build-essential bison flex texinfo gperf libtool \
             patchutils bc zlib1g-dev libexpat-dev git
 
