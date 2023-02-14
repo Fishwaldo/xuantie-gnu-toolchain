@@ -62,7 +62,7 @@ jobs:
           ls -lah
           ls -lah ~/riscv/
           pwd
-          tar czvf toolchan-${{ matrix.target }-${{ matrix.mode }}-${{ matrix.os }}.tar.gz -C ~/riscv/
+          tar czvf toolchan-${{ matrix.target }}-${{ matrix.mode }}-${{ matrix.os }}.tar.gz -C ~/riscv/
           echo "TOOLCHAIN=toolchan-${{ matrix.target }}-${{ matrix.mode }}-${{ matrix.os }}.tar.gz" >> $GITHUB_ENV
 
       - name: Upload Firmware
