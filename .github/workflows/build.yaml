@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - xuantie-gnu-toolchain
   pull_request:
     branches:
-      - master
+      - xuantie-gnu-toolchain
 
 jobs:
   build:
