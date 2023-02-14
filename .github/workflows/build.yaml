@@ -16,7 +16,6 @@ jobs:
       matrix:
         os:     [ubuntu-latest]
         mode:   [newlib, linux]
-        target: [rv32gc-ilp32d, rv64gc-lp64d]
         include: 
           - os: ubuntu-latest
             apt: 1
@@ -54,21 +53,20 @@ jobs:
 
       - name: build toolchain
         run: |
-          TARGET_TUPLE=($(echo ${{ matrix.target }} | tr "-" "\n"))
-          ./configure --prefix=${{ github.workspace }}/riscv --with-arch=${TARGET_TUPLE[0]} --with-abi=${TARGET_TUPLE[1]}
-          sudo make -j $(nproc) ${{ matrix.mode }}
+          ./configure --prefix=${{ github.workspace }}/riscv --with-cmodel=medany --enable-multilib --enable-gdb
+          make -j $(nproc) ${{ matrix.mode }}
 
       - name: tarball build
         run: |
           ls -lah
           ls -lah ~/riscv/
           pwd
-          tar czvf toolchan-${{ matrix.target }}-${{ matrix.mode }}-${{ matrix.os }}.tar.gz -C ${{ github.workspace }}/riscv/
-          echo "TOOLCHAIN=${{ github.workspace }}/toolchan-${{ matrix.target }}-${{ matrix.mode }}-${{ matrix.os }}.tar.gz" >> $GITHUB_ENV
+          tar czvf toolchan-${{ matrix.mode }}-${{ matrix.os }}.tar.gz -C ${{ github.workspace }}/riscv/
+          echo "TOOLCHAIN=${{ github.workspace }}/toolchan-${{ matrix.mode }}-${{ matrix.os }}.tar.gz" >> $GITHUB_ENV
 
       - name: Upload Firmware
         uses: actions/upload-artifact@master
         with:
-          name: toolchan-${{ matrix.target }}-${{ matrix.mode }}-${{ matrix.os }}
+          name: toolchan-${{ matrix.mode }}-${{ matrix.os }}
           path: |
             ${{env.TOOLCHAIN}}    
