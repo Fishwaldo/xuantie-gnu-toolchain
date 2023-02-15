@@ -41,7 +41,7 @@ jobs:
       - name: install macos dependencies
         if: ${{ matrix.brew }}
         run: |
-          brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison
+          brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make
 
       - name: get necessary submodules
         run: |
@@ -59,7 +59,7 @@ jobs:
 
       - name: build toolchain
         run: |
-          export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:$PATH"
+          export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:$PATH"
           ./configure --prefix=${{ github.workspace }}/riscv --with-cmodel=medany --enable-multilib --enable-gdb
           make -j 4 ${{ matrix.mode }}
 
