@@ -5,6 +5,8 @@ on:
   push:
     branches:
       - xuantie-gnu-toolchain
+    tags:
+      - "v*.*.*"
   pull_request:
     branches:
       - xuantie-gnu-toolchain
