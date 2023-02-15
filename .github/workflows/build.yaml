@@ -41,7 +41,7 @@ jobs:
       - name: install macos dependencies
         if: ${{ matrix.brew }}
         run: |
-          brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make
+          brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make m4
 
       - name: get necessary submodules
         run: |
