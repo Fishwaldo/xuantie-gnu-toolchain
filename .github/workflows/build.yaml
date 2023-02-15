@@ -59,7 +59,7 @@ jobs:
 
       - name: build toolchain
         run: |
-          export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:$PATH"
+          export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/make/bin/:$PATH"
           ./configure --prefix=${{ github.workspace }}/riscv --with-cmodel=medany --enable-multilib --enable-gdb
           make -j 4 ${{ matrix.mode }}
 
