@@ -60,9 +60,8 @@ jobs:
       - name: build toolchain
         run: |
           export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:$PATH"
-          export LDFLAGS="-L/usr/local/opt/bison/lib"
           ./configure --prefix=${{ github.workspace }}/riscv --with-cmodel=medany --enable-multilib --enable-gdb
-          make -j $(nproc) ${{ matrix.mode }}
+          make -j 4 ${{ matrix.mode }}
 
       - name: tarball build
         run: |
