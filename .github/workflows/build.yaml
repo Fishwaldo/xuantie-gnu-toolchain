@@ -42,7 +42,7 @@ jobs:
         if: ${{ matrix.brew }}
         run: |
           brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make m4
-
+          ln /usr/local/opt/m4/bin/m4 /usr/local/opt/m4/bin/gm4
       - name: get necessary submodules
         run: |
           git submodule update --init --recursive riscv-binutils
