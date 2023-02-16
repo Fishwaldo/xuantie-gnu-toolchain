@@ -43,12 +43,7 @@ jobs:
         run: |
           brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make m4
           export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/make/bin/:/usr/local/opt/m4/bin/:$PATH"
-          ln /usr/local/opt/make/bin/gmake /usr/local/opt/make/bin/gnumake
-          which gnumake
-          which make
-          gnumake -v
-          make -v
-          
+         
       - name: get necessary submodules
         run: |
           git submodule update --init --recursive riscv-binutils
@@ -62,13 +57,11 @@ jobs:
         run: |
           sed -i '' "s/.*=host-darwin.o$//" riscv-gcc/gcc/config.host
           sed -i '' "s/.* x-darwin.$//" riscv-gcc/gcc/config.host
+          sed -i '' "s/for ac_prog in gnumake gmake make/for ac_prog in gmake make/g" riscv-glibc/configure
 
       - name: build toolchain
         run: |
           export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/make/bin/:/usr/local/opt/m4/bin/:$PATH"
-          which make
-          which gmake
-          which gnumake
           ./configure --prefix=${{ github.workspace }}/riscv --with-cmodel=medany --enable-multilib --enable-gdb
           make -j 4 ${{ matrix.mode }}
 
