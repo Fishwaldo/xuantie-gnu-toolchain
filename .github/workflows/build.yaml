@@ -44,7 +44,6 @@ jobs:
           brew install coreutils python3 gawk gnu-sed gmp mpfr libmpc isl zlib expat bison make m4
           export PATH="/usr/local/opt/coreutils/libexec/gnubin:/usr/local/opt/bison/bin:/usr/local/opt/make/libexec/gnubin:/usr/local/opt/make/bin/:/usr/local/opt/m4/bin/:$PATH"
           ln /usr/local/opt/make/bin/gmake /usr/local/opt/make/bin/gnumake
-          sudo rm /usr/bin/gnumake
           which gnumake
           which make
           gnumake -v
